@@ -1,0 +1,4 @@
+bin
+vendor/*
+!vendor/vendor.json
+bindata.go

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+  <ul>
+  {{#unless isTopDir}}
+    <li><a href="/">/</a></li>
+    <li><a href="../">..</a></li>
+  {{/unless}}
+  {{#each files}}
+    <li>
+      <a href="{{pathToFile}}">{{name}}{{#if isDir}}/{{/if}}</a>
+    </li>
+  {{/each}}
+  </ul>
+</body>
+</html>
