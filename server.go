@@ -68,6 +68,7 @@ func serveDir(w http.ResponseWriter, r *http.Request, file *os.File) {
 	result := listTemplate.MustExec(map[string]interface{}{
 		"files":    fileInfo,
 		"isTopDir": r.URL.Path == "/",
+		"folder":   reqFilePath,
 	})
 
 	fmt.Fprint(w, result)
