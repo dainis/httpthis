@@ -6,9 +6,11 @@ import (
 	"io"
 	_ "io/ioutil"
 	"log"
+	"math"
 	"net/http"
 	"os"
 	"path/filepath"
+	"strconv"
 )
 
 var listTemplate *raymond.Template
@@ -61,6 +63,7 @@ func serveDir(w http.ResponseWriter, r *http.Request, file *os.File) {
 		fileInfo[i] = map[string]interface{}{
 			"name":       dirFileInfo.Name(),
 			"isDir":      dirFileInfo.IsDir(),
+			"size":       humanNumber(dirFileInfo.Size()),
 			"pathToFile": "/" + rel,
 		}
 	}
@@ -84,4 +87,27 @@ func serveFile(w http.ResponseWriter, file *os.File) {
 	}
 
 	log.Printf("File %s sent to client", file.Name())
+}
+
+func humanNumber(s int64) string {
+	if s == 0 {
+		return "0B"
+	}
+
+	if s < 1024 {
+		return strconv.FormatInt(s, 10) + "B"
+	}
+
+	if s < 1024*1024 {
+		kb := int64(math.Ceil(float64(s) / 1024))
+		return strconv.FormatInt(kb, 10) + "kB"
+	}
+
+	if s < 1024*1024*1024 {
+		mb := int64(math.Ceil(float64(s) / 1024 * 1024))
+
+		return strconv.FormatInt(mb, 10) + "mB"
+	}
+
+	return ""
 }

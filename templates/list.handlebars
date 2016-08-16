@@ -14,7 +14,7 @@
   {{/unless}}
   {{#each files}}
     <li>
-      <a href="{{pathToFile}}">{{name}}{{#if isDir}}/{{/if}}</a>
+      <a href="{{pathToFile}}">{{name}}{{#if isDir}}/{{/if}}</a> {{size}}
     </li>
   {{/each}}
   </ul>
